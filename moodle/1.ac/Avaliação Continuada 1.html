@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Avaliação Continuada 1</title>
+
+  <!-- MATHJAX 3 (através da CDN) -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- MATHJAX 3 (salvo no computador) -->
+  <!-- <script type="text/javascript" async src="../../../Aplicativos/MathJax-master/es5/tex-mml-chtml.js" async></script> -->
+</head>
+
+<body>
+
+  <h1>Avaliação Continuada 1</h1>
+
+  <p>
+    <hr>
+  </p>
+
+  <p>
+    <strong>Questão 1:</strong>
+    Escreva pseudocódigos para os procedimentos <strong>minHeap-decreaseKey(A,i,newKey), minFixDown(A, i),
+      minMoveUp(A,i),
+      minHeap-increaseKey(A,i,newKey), minHeapInsert(A,key) e extractMinimum(A)</strong>,
+    que implementem uma fila de prioridade <strong>mínima</strong> com um heap de mínimo.
+    <strong>Obs.:</strong> Note que todos esses procedimentos são versões similares às vistas em sala,
+    só que aqui estou pedindo para uma fila de prioridades mínima.
+    Estou pedindo pseudocódigo, não escreva implementações em linguagem de programação específica.
+  </p>
+
+  <h5>minHeap-decreaseKey(A,i,newKey)</h5>
+  <pre>
+1.  if newKey &lt a[i] 
+2.    then error "invalid key"
+3.  a[i] = newKey
+4.  minFixDown(A,i)
+  </pre>
+  <h5>minFixDown(A, i)</h5>
+  <pre>
+1.  while 2i &lt= A.heapSize
+2.    l = 2i
+3.    r = 2i + 1
+4.    smallest = i
+5.    if l &lt= A.heapSize and A[l] &lt A[smallest]
+6.      then smallest = l
+7.    if r &lt= A.heapSize and A[r] &lt A[smallest]
+8.      then smallest = r
+9.    if smallest != i 
+10.     then swap A[i] with A[smallest]
+11.   else 
+12.     break
+  </pre>
+  <h5>minMoveUp(A,i)</h5>
+  <pre>
+1.  p = i/2
+2.  while p >= 1 and A[i] &lt A[p]
+3.    do swap A[i] with A[p]
+4.    i = p
+5.    p = i/2
+  </pre>
+  <h5>minHeap-increaseKey(A,i,newKey)</h5>
+  <pre>
+1.  if newKey > a[i]
+2.    then error "invalid key"
+3.  a[i] = newKey
+4.  minMoveUp(A,i)
+  </pre>
+  <h5>minHeapInsert(A,key)</h5>
+  <pre>
+1.  if A.heapSize >= A.lenght 
+2.    then error "heap overflow"
+3.  A.heapSize = A.heapSize + 1
+4.  A[A.heapSize] = newKey
+5.  minMoveUp(A,A.heapSize)
+  </pre>
+  <h5>extractMinimum(A)</h5>
+  <pre>
+1.  if A.heapSize &lt 1
+2.    then error "heap underflow"
+3.  min = A[1]
+4.  A[1] = A[A.heapSize]
+5.  A.heapSize = A.heapSize - 1
+6.  minFixDown(A,1)
+7.  return min
+  </pre>
+
+
+  <p>
+    <strong>Questão 2:</strong> Seja \(A\) um heap de máximo. A operação <strong>HEAP-DELETE(A, i)</strong> elimina
+    o item no nó \(i\) do heap \(A\). Dê uma implementação correta de <strong>HEAP-DELETE(A,i)</strong>
+    que seja executada no tempo \(O(\lg n)\) para um heap de máximo de \(n\) elementos.
+  </p>
+
+  <pre>
+1.  if i > A.heapSize
+2.    then error "invalid index"
+3.  A[i] = A[A.heapSize]
+4.  A.heapSize = A.heapSize - 1
+5.  maxFixDown(A,i)
+  </pre>
+
+  <p>
+    <strong>Questão 3:</strong> Um heap \(d\)-ário é semelhante a um heap binário,
+    mas (com uma única exceção possível) nós que não são folhas têm \(d\) filhos em vez de dois filhos.
+  <ol type="a">
+    <li>
+      Como você representaria um heap \(d\)-ário de máximo em um vetor? Justifique.
+      <p>
+        <strong>Resposta:</strong>
+        O pai de um nó \(i\) seria dado por: \(PAI(i) = \lfloor i/d \rfloor\), isso porque em uma árvore \(d\)-ária,
+        cada nó tem \(d\) filhos, e como os filhos estão dispostos em sequência no vetor, a divisão por \(d\) nos dá o
+        índice do pai, que deve ser arredondado para baixo.
+
+        Os filhos de um nó \(i\) seriam dados por: \(FILHO(i,k) = di - d + 1 + k\), onde \(k\) varia de 0 a \(d-1\),
+        isso porque o primeiro filho de um nó \(i\) seria dado por \(di - d + 1\), e os demais filhos seriam dados por
+        \(di - d + 1 + 1\), \(di - d + 1 + 2\), ..., \(di - d + 1 + d-1\).
+      </p>
+    </li>
+    <li>
+      Qual é a altura de um heap \(d\)-ário de \(n\) elementos em termos de \(n\) e \(d\)? Justifique.
+    </li>
+    <li>
+      Dê uma implementação eficiente de EXTRACT-MAXIMUM() em um heap de máximo \(d\)-ário.
+      Analise seu tempo de execução em termos de \(d\) e \(n\).
+    </li>
+  </ol>
+  </p>
+
+  <p>
+    <strong>Questão 4:</strong> Um algoritmo de ordenação é <strong>estável</strong>
+    quando números com o mesmo valor aparecem no arranjo de saída na mesma ordem em
+    que se encontram no arranjo de entrada. Essa propriedade é importante quando os
+    dados satélites que acompanham os elementos sendo ordenados devem ser transportados
+    juntamente com o elemento. <strong>Mostre que o HeapSort não é estável</strong>.
+  </p>
+
+  <p>
+    <strong>Resposta:</strong>
+  </p>
+
+  <p>Considere o seguinte array, onde os números são os valores e as letras são seus identificadores:</p>
+  <pre>
+    [21, 20a, 20b, 12]
+  </pre>
+
+  <p>Esse array pode ser representado por um heap de máximo:</p>
+  <pre>
+         21
+       /   \
+     20a   20b
+     /  
+    12  
+</pre>
+
+  <p>Executando passo a passo o algoritmo HeapSort:</p>
+  <ol>
+    <li>Trocamos o primeiro elemento da heap (21) com o último nó (12).</li>
+    <li>Diminuímos o tamanho da heap em 1.</li>
+    <p>Vetor: [12, 20a, 20b, 21]</p>
+    <p>Heap:</p>
+    <pre>
+        12
+      /   \
+    20a    20b
+    </pre>
+    <li>Restauramos a propriedade de heap de máximo.</li>
+    <p>Vetor: [20a, 12, 20b, 21]</p>
+    <p>Heap:</p>
+    <pre>
+        20a
+      /   \
+    12    20b
+    </pre>
+    <li>Trocamos o primeiro elemento da heap (20a) com o último nó (20b).</li>
+    <li>Diminuímos o tamanho da heap em 1.</li>
+    <p>Vetor: [20b, 12, 20a, 21]</p>
+    <p>Heap:</p>
+    <pre>
+        20b
+      /
+    12 
+    </pre>
+    <li>Restauramos a propriedade de heap de máximo.</li>
+    <p>Vetor: [20b, 12, 20a, 21]</p>
+    <p>Heap:</p>
+    <pre>
+        20b
+      /
+    12 
+    </pre>
+    <li>Trocamos o primeiro elemento da heap (20b) com o último nó (20a).</li>
+    <li>Diminuímos o tamanho da heap em 1.</li>
+    <p>Vetor: [12, 20b, 20a, 21]</p>
+    <p>Heap:</p>
+    <pre>
+        12
+    </pre>
+    <li>Agora como o tamanho da heap é 1, o algoritmo termina com o vetor ordenado, mas podemos perceber que o elemento
+      20a que estava antes do 20b, agora está depois dele, o que mostra que o HeapSort não é estável.</li>
+  </ol>
+
+</body>
+
+</html>
