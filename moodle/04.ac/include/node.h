@@ -12,9 +12,4 @@ struct node {
         this->left = left;
         this->right = right;
     }
-
-    ~node() {
-        delete left;
-        delete right;
-    }
 };

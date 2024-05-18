@@ -10,6 +10,17 @@ class avl_tree {
     node* _root = nullptr;
     unsigned int _size = 0;
 
+    node* _clear(node* n) {
+        if (n == nullptr) {
+            return nullptr;
+        }
+
+        n->left = _clear(n->left);
+        n->right = _clear(n->right);
+        delete n;
+        return nullptr;
+    }
+
     node* _copy(node* other_root) {
         if (other_root == nullptr) {
             return nullptr;
@@ -301,8 +312,7 @@ class avl_tree {
     }
 
     void clear() {
-        delete _root;
-        _root = nullptr;
+        _root = _clear(_root);
         _size = 0;
     }
 
