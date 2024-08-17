@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Modelo de uso do MathJax (HTML+Latex)</title>
+
+  <!-- MATHJAX 3 (através da CDN) -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- MATHJAX 3 (salvo no computador) -->
+  <!-- <script type="text/javascript" async src="../../../Aplicativos/MathJax-master/es5/tex-mml-chtml.js" async></script> -->
+</head>
+<body>
+  <h1>Avaliação Continuada 5</h1>
+
+  <p>
+    As repostas podem ser enviadas em arquivo html (use o modelo que eu forneci) 
+    ou podem ser enviadas diretamente pelo editor de texto aqui no Moodle. 
+    Não esqueça, se for copiar sua resposta do html para o Moodle, copie apenas o 
+    conteúdo que estiver entre as tags <strong>body</strong>.
+  </p> 
+
+  <p>
+    <hr>
+  </p>
+
+  <p>
+    <strong>Questão 1 (Cormen 13.1-5):</strong> 
+    Prove que o comprimento do caminho mais longo de um nó \(x\) 
+    em uma árvore rubro-negra até uma de suas folhas descendentes é, 
+    no máximo, duas vezes o do caminho mais curto do nó \(x\) até 
+    uma folha descendente. <strong>Obs.:</strong> O comprimento 
+    de um caminho é o número de arestas no caminho. Logo,
+    todo caminho de tamanho \(n\) tem comprimento \(n-1\).
+  </p>
+
+  <p>Vamos criar dois caminhos a partir de um nó qualquer, um maior e um menor.</p>
+
+  <p>
+  menor = (a<sub>1</sub>, a<sub>2</sub>, ..., a<sub>n</sub>)<br>
+  maior = (b<sub>1</sub>, b<sub>2</sub>, ..., b<sub>m</sub>)
+  </p>
+  
+  <p>
+  Pela propriedade 5, eles têm o mesmo número de nós pretos e, pela propriedade 4, nenhum 
+  nó vermelho tem um filho vermelho.
+  </p>
+  
+  <p>
+  Pegando o menor caminho, o número de nós vermelhos é no máximo igual a ⌊(n - 1)/2⌋ e o 
+  número de nós pretos é no máximo ⌈(n + 1)/2⌉.
+  </p>
+  
+  <p>
+  Como <i>n</i> é o menor caminho, sabemos que <i>m ≥ ⌈(n + 1)/2⌉</i>.
+  </p>
+  
+  <p>
+  Vamos supor que <i>n ≥ 2m</i>. A partir disso, temos <i>m ≥ ⌈(n + 1)/2⌉ ≥ ⌈(2m + 2)/2⌉ = m + 1</i>, 
+  ou seja, uma contradição. Logo, o maior caminho tem que ter no máximo duas vezes o tamanho do menor.
+  </p>
+  
+
+  <p>
+    <strong>Questão 2 (Cormen 13.1-6):</strong> 
+    Qual é o maior número possı́vel de nós internos em uma árvore 
+    rubro-negra com altura negra k? Qual é o menor número possı́vel?
+    Prove cada uma de suas afirmações.
+  </p>
+
+  <p>Para maximizar o número de nós internos, considere uma árvore 
+  binária completa onde os nós alternam entre vermelho e preto e tem 
+  altura <i>2k + 1</i>. Em uma árvore completa binária de altura <i>2k</i>,
+  o número total de nós é <i>2<sup>2k+1</sup> - 1</i>. O número de folhas 
+  é <i>2<sup>2k</sup></i>, então o número de nós internos é 
+  <i>2<sup>2k+1</sup> - 1 - 2<sup>2k</sup> = 2<sup>2k</sup> - 1</i>. Assim, 
+  a fórmula para o número máximo de nós internos é <i>2<sup>2k</sup> - 1</i>.</p>
+
+  <p>Para minimizar o número de nós internos, considere uma árvore binária completa 
+    onde todos os nós são pretos e tem altura <i>2k + 1</i>. Em uma árvore binária
+     completa de altura <i>2k</i>, o número total de nós é <i>2<sup>2k+1</sup> - 1</i>, 
+     e o número de folhas é <i>2<sup>2k</sup></i>. O número de nós internos é então 
+     <i>2<sup>2k+1</sup> - 1 - 2<sup>2k</sup> = 2<sup>2k</sup> - 1</i>. Portanto, 
+     a fórmula para o número mínimo de nós internos é <i>2<sup>k</sup> - 1</i>.</p>
+
+
+  <p>
+    <strong>Questão 3 (Cormen 13.2-1):</strong> 
+    Dada uma árvore rubro-negra \(T\) arbitrária 
+    e um nó \(x\) qualquer de \(T\), escreva o
+    pseudocódigo para a rotação direita da 
+    subárvore com raiz \(x\).
+  </p>
+  <h5>right_rotate(T, x)</h5>
+  <pre>
+    1. y = x.left
+    2. x.left = y.right
+    3. if y.right != T.nill
+    4.    t.right.p = x
+    5. y.p = x.p
+    6. if x.p == T.nil
+    7.    T.root = y
+    8. else if x == x.p.left
+    9.    x.p.left = y
+    10. else
+    11.   x.p.right = y
+    12. y.right = x
+    13. x.p = y 
+  </pre>
+
+  <p>
+    <strong>Questão 4 (Cormen 13.2-2):</strong> 
+    Argumente por quê em uma árvore binária de busca
+    com \(n\) nós, existem exatamente \(n-1\) 
+    rotações possíveis. Dica: tente pensar quantas arestas têm numa árvore? 
+  </p>
+
+  <p><strong>Base:</strong> Para uma árvore com 1 nó, não há rotações possíveis. Portanto, 
+    o número de rotações é 0, o que corresponde a 1 - 1.</p>
+
+<p><strong>Hipótese de Indução:</strong> Suponha que qualquer árvore binária de busca com 
+  <i>n</i> nós tem exatamente <i>n - 1</i> rotações válidas.</p>
+
+<p><strong>Passo de Indução:</strong> Vamos considerar uma árvore com <i>n + 1</i> nós.</p>
+
+<ul>
+  <li><strong>Se a raiz não tem filho direito:</strong> A árvore pode realizar uma rotação para a direita. O subárvore esquerda tem <i>n</i> nós e, pela hipótese de indução, possui <i>n - 1</i> rotações. Portanto, o total de rotações é <i>(n - 1) + 1 = n</i>.</li>
+  <li><strong>Se a raiz não tem filho esquerdo:</strong> A árvore pode realizar uma rotação para a esquerda. O subárvore direita tem <i>n</i> nós e, pela hipótese de indução, possui <i>n - 1</i> rotações. Portanto, o total de rotações é <i>(n - 1) + 1 = n</i>.</li>
+  <li><strong>Se a raiz tem ambos os filhos:</strong> A árvore pode realizar uma rotação para a esquerda ou para a direita, somando 2 rotações. O subárvore esquerda tem <i>k</i> nós e o subárvore direita tem <i>n - k</i> nós. Pela hipótese de indução, o total de rotações é <i>2 + (k - 1) + (n - k - 1) = n</i>.</li>
+</ul>
+
+<p><strong>Conclusão:</strong> Em todos os casos, a árvore com <i>n + 1</i> nós tem exatamente <i>n</i> rotações válidas, completando a prova por indução.</p>
+
+
+  <p>
+    <strong>Questão 5:</strong>
+    É possível colorir todos os nós de uma árvore 
+    AVL \(T\) com cores vermelha e preta de 
+    modo que tal coloração de \(T\) respeite todas
+    as 5 propriedades de uma árvore rubro-negra. 
+    Explique como e apresente um algoritmo. O 
+    algoritmo recebe como entrada uma árvore AVL \(T\) e 
+    retorna a mesma árvore \(T\) só que colorida 
+    como pedido acima.
+    <strong>Não esqueça que o algoritmo deve estar correto,
+    caso contrário não resolve o problema!</strong>
+  </p>
+  
+
+  
+
+  
+  
+ 
+
+  
+</body>
+</html>
